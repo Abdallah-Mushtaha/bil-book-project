@@ -12,7 +12,7 @@ export default function CtaFooter() {
       {/* CTA Section */}
       <section
         ref={ref}
-        className="py-16 md:py-32 px-4 relative overflow-hidden text-center"
+        className="py-16 md:py-32 px-4 relative overflow-hidden text-center mt-4"
         style={{ background: "#0a0304" }}
       >
         <div

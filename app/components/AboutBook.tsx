@@ -17,7 +17,7 @@ export default function AboutBook() {
     <section
       id="the-book"
       ref={ref}
-      className="py-32 px-4 relative overflow-hidden"
+      className="py-32 px-4 relative overflow-hidden my-4"
       style={{ background: "#0a0304" }}
     >
       <div

@@ -43,7 +43,7 @@ export default function Readers() {
     <section
       id="readers"
       ref={ref}
-      className="py-32 px-4 relative overflow-hidden"
+      className="py-32 px-4 relative overflow-hidden my-4"
       style={{ background: "var(--black)" }}
     >
       <div
