@@ -1,0 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap");
+@import "tailwindcss";
+
+:root {
+  --black: #080808;
+  --off-white: #f2eee8;
+  --crimson: #8b1a1a;
+  --crimson-light: #c0392b;
+  --gray-mid: #888;
+  --gray-light: #ccc;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--black);
+  color: var(--off-white);
+  font-family: "Inter", sans-serif;
+  overflow-x: hidden;
+}
+
+.font-display {
+  font-family: "Playfair Display", serif;
+}
+
+.font-body-serif {
+  font-family: "Cormorant Garamond", serif;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--black);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--crimson);
+  border-radius: 2px;
+}
+
+/* Selection */
+::selection {
+  background: var(--crimson);
+  color: var(--off-white);
+}
