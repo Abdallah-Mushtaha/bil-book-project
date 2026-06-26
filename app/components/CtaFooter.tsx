@@ -12,7 +12,7 @@ export default function CtaFooter() {
       {/* CTA Section */}
       <section
         ref={ref}
-        className="py-16 md:py-32 px-4 md:px-8 relative overflow-hidden text-center"
+        className="py-16 md:py-32 px-4 relative overflow-hidden text-center"
         style={{ background: "#0a0304" }}
       >
         <div
@@ -37,9 +37,9 @@ export default function CtaFooter() {
               <Image
                 src="/book.png"
                 alt="Because I Loved"
-                width={300} // تم تقليل العرض الافتراضي
-                height={450} // تم تقليل الارتفاع الافتراضي
-                className="w-1/2 md:w-auto scale-75 md:scale-100 -rotate-12 hover:rotate-0 transition-transform duration-700 ease-out drop-shadow-[0_20px_40px_rgba(139,26,26,0.3)] md:drop-shadow-[0_40px_80px_rgba(139,26,26,0.5)] p-0 m-0"
+                width={300}
+                height={450}
+                className="w-2/3 md:w-[300px] -rotate-12 hover:rotate-0 transition-transform duration-700 ease-out drop-shadow-[0_20px_40px_rgba(139,26,26,0.3)] md:drop-shadow-[0_40px_80px_rgba(139,26,26,0.5)]"
               />
             </motion.div>
 
@@ -50,7 +50,7 @@ export default function CtaFooter() {
               Experience the book
             </p>
             <h2
-              className="font-display text-4xl md:text-7xl font-bold mb-4 md:mb-6 leading-tight"
+              className="font-display text-4xl md:text-7xl font-bold mb-4 md:mb-6 leading-tight px-2"
               style={{ color: "var(--off-white)" }}
             >
               Begin the{" "}
@@ -59,26 +59,25 @@ export default function CtaFooter() {
               </em>
             </h2>
             <p
-              className="font-body-serif text-lg md:text-xl leading-relaxed mb-8 md:mb-10 max-w-lg mx-auto px-4 md:px-0"
+              className="font-body-serif text-lg md:text-xl leading-relaxed mb-8 md:mb-10 max-w-lg mx-auto px-6"
               style={{ color: "var(--gray-mid)" }}
             >
               Available now wherever books are sold. Start reading today.
             </p>
 
-            <div className="flex flex-col md:flex-row items-center justify-center gap-4 flex-wrap px-4 md:px-0">
+            <div className="flex flex-col items-center justify-center gap-4 px-4">
               <motion.button
                 whileHover={{
                   scale: 1.05,
                   backgroundColor: "rgba(139,26,26,0.7)",
                 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-full md:w-auto px-10 py-3.5 text-sm tracking-[0.18em] uppercase font-medium rounded-full transition-all duration-300"
+                className="w-full max-w-[280px] py-3.5 text-sm tracking-[0.18em] uppercase font-medium rounded-full transition-all duration-300"
                 style={{
                   background: "rgba(139,26,26,0.5)",
                   border: "1px solid rgba(192,57,43,0.7)",
                   color: "var(--off-white)",
                   backdropFilter: "blur(16px)",
-                  WebkitBackdropFilter: "blur(16px)",
                   boxShadow:
                     "0 4px 28px rgba(139,26,26,0.35), inset 0 1px 0 rgba(255,255,255,0.08)",
                 }}
@@ -92,13 +91,12 @@ export default function CtaFooter() {
                   backgroundColor: "rgba(255,255,255,0.07)",
                 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-full md:w-auto px-8 py-3.5 text-sm tracking-[0.16em] uppercase font-medium rounded-full transition-all duration-300"
+                className="w-full max-w-[280px] py-3.5 text-sm tracking-[0.16em] uppercase font-medium rounded-full transition-all duration-300"
                 style={{
                   background: "rgba(255,255,255,0.04)",
                   border: "1px solid rgba(255,255,255,0.14)",
                   color: "var(--off-white)",
                   backdropFilter: "blur(12px)",
-                  WebkitBackdropFilter: "blur(12px)",
                 }}
               >
                 Download Free Chapter
@@ -110,34 +108,26 @@ export default function CtaFooter() {
 
       {/* Footer */}
       <footer
-        className="py-10 px-4 md:px-8 border-t"
+        className="py-10 px-4 border-t"
         style={{
           background: "var(--black)",
           borderColor: "rgba(255,255,255,0.06)",
         }}
       >
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4">
+        <div className="max-w-7xl mx-auto flex flex-col items-center justify-center gap-6 text-center">
           <p
             className="font-display italic text-lg"
             style={{ color: "var(--off-white)" }}
           >
             Zahraa Naserelddine
           </p>
-          <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
             {["Privacy Policy", "Contact", "Who Designed This?"].map((link) => (
               <a
                 key={link}
                 href="#"
                 className="text-[11px] md:text-xs tracking-wide uppercase transition-colors duration-200"
                 style={{ color: "var(--gray-mid)" }}
-                onMouseEnter={(e) =>
-                  ((e.currentTarget as HTMLAnchorElement).style.color =
-                    "var(--off-white)")
-                }
-                onMouseLeave={(e) =>
-                  ((e.currentTarget as HTMLAnchorElement).style.color =
-                    "var(--gray-mid)")
-                }
               >
                 {link}
               </a>

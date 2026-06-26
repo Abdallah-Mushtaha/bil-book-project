@@ -13,10 +13,11 @@ export default function AboutBook() {
   const bookRotate = useTransform(scrollYProgress, [0, 1], [8, -4]);
 
   return (
+    // تم تغيير px-8 إلى px-4 لضمان عدم الالتصاق بالأطراف على الموبايل
     <section
       id="the-book"
       ref={ref}
-      className="py-32 px-8 relative overflow-hidden"
+      className="py-32 px-4 relative overflow-hidden"
       style={{ background: "#0a0304" }}
     >
       <div
@@ -27,7 +28,8 @@ export default function AboutBook() {
         }}
       />
 
-      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-20 items-center relative z-10">
+      {/* تم تحسين الـ grid ليكون متجاوباً بشكل أفضل مع المسافات */}
+      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 md:gap-20 items-center relative z-10">
         {/* Book */}
         <motion.div
           initial={{ opacity: 0, x: -60 }}
@@ -45,7 +47,7 @@ export default function AboutBook() {
               alt="Because I Loved"
               width={400}
               height={600}
-              className="w-full max-w-md scale-125 -rotate-12 hover:rotate-0 transition-transform duration-700 ease-out drop-shadow-[0_40px_80px_rgba(139,26,26,0.5)]"
+              className="w-full max-w-[280px] md:max-w-md scale-100 md:scale-125 -rotate-6 md:-rotate-12 hover:rotate-0 transition-transform duration-700 ease-out drop-shadow-[0_40px_80px_rgba(139,26,26,0.5)]"
             />
           </motion.div>
         </motion.div>
@@ -55,6 +57,7 @@ export default function AboutBook() {
           initial={{ opacity: 0, x: 60 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+          className="text-center md:text-left"
         >
           <p
             className="text-xs tracking-[0.35em] uppercase mb-5"
@@ -63,20 +66,20 @@ export default function AboutBook() {
             About the book
           </p>
           <h2
-            className="font-display text-5xl md:text-6xl font-bold mb-3 leading-tight"
+            className="font-display text-4xl md:text-6xl font-bold mb-3 leading-tight"
             style={{ color: "var(--off-white)" }}
           >
             Because I
           </h2>
           <h2
-            className="font-display italic text-5xl md:text-6xl font-bold mb-10 leading-tight"
+            className="font-display italic text-4xl md:text-6xl font-bold mb-10 leading-tight"
             style={{ color: "var(--crimson)" }}
           >
             Loved
           </h2>
 
           <div
-            className="space-y-5 font-body-serif text-xl leading-relaxed"
+            className="space-y-5 font-body-serif text-lg md:text-xl leading-relaxed"
             style={{ color: "var(--gray-light)" }}
           >
             <p>
@@ -95,14 +98,14 @@ export default function AboutBook() {
             </p>
           </div>
 
-          <div className="mt-10 flex items-center gap-4 flex-wrap">
+          <div className="mt-10 flex flex-col md:flex-row items-center gap-6 justify-center md:justify-start">
             <motion.button
               whileHover={{
                 scale: 1.05,
                 backgroundColor: "rgba(139,26,26,0.7)",
               }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 text-sm tracking-[0.15em] uppercase font-medium rounded-full transition-all duration-300"
+              className="px-8 py-3 text-sm tracking-[0.15em] uppercase font-medium rounded-full transition-all duration-300 w-full md:w-auto"
               style={{
                 background: "rgba(139,26,26,0.5)",
                 border: "1px solid rgba(192,57,43,0.7)",

@@ -26,7 +26,7 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-8 z-50 w-full px-4 flex justify-end md:justify-center">
-      <div className="flex flex-col items-end md:items-center">
+      <div className="flex flex-col items-end md:items-center mr-0 md:mr-0">
         <motion.button
           onClick={() => setIsOpen(!isOpen)}
           className="md:hidden flex items-center justify-center w-14 h-14 rounded-full border border-white/10 bg-black/80 backdrop-blur-xl text-white shadow-xl cursor-pointer"
@@ -40,7 +40,7 @@ export default function Navbar() {
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="md:hidden mt-2 p-6 bg-black/90 border border-white/10 rounded-2xl backdrop-blur-xl w-screen max-w-[280px] shadow-2xl"
+              className="md:hidden mt-2 p-6 bg-black/90 border border-white/10 rounded-2xl backdrop-blur-xl w-[260px] shadow-2xl mr-0"
             >
               <div className="flex flex-col gap-4">
                 {links.map((link) => (
@@ -52,7 +52,7 @@ export default function Navbar() {
                     {link}
                   </button>
                 ))}
-                <button className="mt-2 w-full rounded-lg bg-red-700 py-2.5 text-xs text-white font-bold cursor-pointer">
+                <button className="mt-2 w-full rounded-lg bg-red-700 px-4 py-3 text-xs text-white font-bold cursor-pointer flex items-center justify-center">
                   Order Book
                 </button>
               </div>

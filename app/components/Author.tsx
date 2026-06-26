@@ -8,10 +8,11 @@ export default function Author() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
+    // تم تغيير px-8 إلى px-4 لضمان عدم الالتصاق بالأطراف على الموبايل
     <section
       id="author"
       ref={ref}
-      className="py-32 px-8 relative overflow-hidden"
+      className="py-32 px-4 relative overflow-hidden"
       style={{ background: "#070103" }}
     >
       <div
@@ -22,12 +23,14 @@ export default function Author() {
         }}
       />
 
-      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 items-center relative z-10">
+      {/* تم تحسين الـ grid ليكون متجاوباً: عمود واحد في الموبايل، وعمودين في الشاشات المتوسطة وما فوق */}
+      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 md:gap-16 items-center relative z-10">
         {/* Text */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 1, ease: "easeOut" }}
+          className="text-center md:text-left"
         >
           <p
             className="text-xs tracking-[0.35em] uppercase mb-5"
@@ -36,7 +39,7 @@ export default function Author() {
             About the author
           </p>
           <h2
-            className="font-display text-5xl md:text-6xl font-bold mb-8 leading-tight"
+            className="font-display text-4xl md:text-6xl font-bold mb-8 leading-tight"
             style={{ color: "var(--off-white)" }}
           >
             Zahraa
@@ -47,7 +50,7 @@ export default function Author() {
           </h2>
 
           <div
-            className="space-y-5 font-body-serif text-xl leading-relaxed mb-10"
+            className="space-y-5 font-body-serif text-lg md:text-xl leading-relaxed mb-10"
             style={{ color: "var(--gray-light)" }}
           >
             <p>
@@ -74,26 +77,24 @@ export default function Author() {
             </p>
           </div>
         </motion.div>
-
         {/* Portrait */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-          className="relative"
+          className="relative px-4 md:px-0"
         >
           <div className="relative mx-auto max-w-sm">
-            <div
-              className="absolute -inset-1 z-0 rounded-2xl"
-              style={{
-                background:
-                  "linear-gradient(135deg, var(--crimson) 0%, transparent 60%)",
-              }}
-            />
-            <div
-              className="relative z-10 rounded-2xl overflow-hidden"
-              style={{ background: "var(--black)", padding: "3px" }}
-            >
+            {/* Animated Border */}
+            <div className="absolute -inset-[2px] z-0 rounded-[20px] overflow-hidden">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 bg-[conic-gradient(from_0deg,var(--crimson),transparent_50%,var(--crimson))]"
+              />
+            </div>
+
+            <div className="relative z-10 rounded-2xl overflow-hidden bg-black p-[3px]">
               <Image
                 src="/author.png"
                 alt="Zahraa Naserelddine"
@@ -112,7 +113,7 @@ export default function Author() {
             <motion.div
               animate={{ y: [0, -6, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -bottom-5 -left-5 px-5 py-3 rounded-xl z-10"
+              className="absolute -bottom-5 -left-2 md:-left-5 px-5 py-3 rounded-xl z-10"
               style={{
                 background: "rgba(139,26,26,0.6)",
                 border: "1px solid rgba(192,57,43,0.6)",
