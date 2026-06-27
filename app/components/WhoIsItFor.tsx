@@ -34,7 +34,7 @@ export default function WhoIsItFor() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="about" ref={ref} className="py-32 px-4 bg-black my-4">
+    <section id="about" ref={ref} className="py-32 px-4 bg-black">
       <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 40 }}

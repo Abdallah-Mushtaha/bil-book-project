@@ -12,7 +12,7 @@ export default function Author() {
     <section
       id="author"
       ref={ref}
-      className="py-32 px-4 relative overflow-hidden my-4"
+      className="py-32 px-4 relative overflow-hidden "
       style={{ background: "#070103" }}
     >
       <div
