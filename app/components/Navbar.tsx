@@ -88,7 +88,7 @@ export default function Navbar() {
                     </Link>
 
                     <div className="flex justify-center">
-                      <UserButton afterSignOutUrl="/" />
+                      <UserButton signOutUrl="/" />
                     </div>
                   </>
                 )}
@@ -145,11 +145,7 @@ export default function Navbar() {
                 Order Book
               </Link>
 
-              <UserButton afterSignOutUrl="/">
-                <UserButton.MenuItems>
-                  <UserButton.Action label="signOut" />
-                </UserButton.MenuItems>
-              </UserButton>
+              <UserButton signOutUrl="/" />
             </>
           )}
         </div>
