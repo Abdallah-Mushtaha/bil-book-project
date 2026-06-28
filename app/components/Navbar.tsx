@@ -88,7 +88,7 @@ export default function Navbar() {
                     </Link>
 
                     <div className="flex justify-center">
-                      <UserButton signOutUrl="/" />
+                      <UserButton />
                     </div>
                   </>
                 )}
@@ -145,7 +145,7 @@ export default function Navbar() {
                 Order Book
               </Link>
 
-              <UserButton signOutUrl="/" />
+              <UserButton />
             </>
           )}
         </div>
