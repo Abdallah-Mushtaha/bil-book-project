@@ -1,14 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import Link from "next/link";
 
 export default function SuccessClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
   const [checking, setChecking] = useState(true);
-  const [downloading, setDownloading] = useState(false); // ← أضف هاد
 
   useEffect(() => {
     const justPurchased = sessionStorage.getItem("just_purchased");
@@ -28,13 +26,6 @@ export default function SuccessClient() {
 
     return () => clearTimeout(timer);
   }, [router]);
-
-  const handleDownload = () => {
-    if (downloading) return;
-    setDownloading(true);
-    // بعد ما يبدأ التنزيل رجّع الزر بعد 5 ثواني
-    setTimeout(() => setDownloading(false), 5000);
-  };
 
   if (checking) {
     return (
@@ -82,30 +73,18 @@ export default function SuccessClient() {
         </p>
 
         {orderId && (
-          <Link
+          <a
             href={`/api/download?orderId=${orderId}`}
-            target="_blank"
-            onClick={(e) => {
-              if (downloading) {
-                e.preventDefault();
-                return;
-              }
-              setDownloading(true);
-              setTimeout(() => setDownloading(false), 5000);
-            }}
             className="inline-block px-8 py-3 rounded-full text-sm font-medium tracking-[0.15em] uppercase transition-all duration-300"
             style={{
-              background: downloading
-                ? "rgba(80,80,80,0.5)"
-                : "rgba(139,26,26,0.5)",
-              border: `1px solid ${downloading ? "rgba(120,120,120,0.5)" : "rgba(192,57,43,0.7)"}`,
+              background: "rgba(139,26,26,0.5)",
+              border: "1px solid rgba(192,57,43,0.7)",
               color: "var(--off-white)",
-              cursor: downloading ? "not-allowed" : "pointer",
-              opacity: downloading ? 0.6 : 1,
+              cursor: "pointer",
             }}
           >
-            {downloading ? "Downloading..." : "Download Book"}
-          </Link>
+            Download Book
+          </a>
         )}
 
         <p className="text-sm py-5" style={{ color: "var(--gray-mid)" }}>
