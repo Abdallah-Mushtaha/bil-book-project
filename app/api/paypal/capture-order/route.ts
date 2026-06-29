@@ -54,7 +54,8 @@ export async function POST(req: NextRequest) {
     }
 
     const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
-    const downloadUrl = await generateTempDownloadUrl();
+const downloadUrl = await generateTempDownloadUrl();
+console.log("Generated downloadUrl:", downloadUrl);
 
     await supabase
       .from("orders")
