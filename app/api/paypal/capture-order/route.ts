@@ -23,11 +23,12 @@ async function getPayPalAccessToken() {
 async function generateTempDownloadUrl(): Promise<string> {
   const blobUrl = process.env.BOOK_BLOB_URL!;
   
-  const { downloadUrl } = await head(blobUrl, {
+  const result = await head(blobUrl, {
     token: process.env.BLOB_READ_WRITE_TOKEN,
   });
   
-  return downloadUrl;
+  console.log("head result:", JSON.stringify(result));
+  return result.downloadUrl;
 }
 
 export async function POST(req: NextRequest) {
@@ -54,8 +55,8 @@ export async function POST(req: NextRequest) {
     }
 
     const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
-const downloadUrl = await generateTempDownloadUrl();
-console.log("Generated downloadUrl:", downloadUrl);
+    const downloadUrl = await generateTempDownloadUrl();
+    console.log("Final downloadUrl:", downloadUrl);
 
     await supabase
       .from("orders")
@@ -71,15 +72,10 @@ console.log("Generated downloadUrl:", downloadUrl);
       downloadUrl,
     });
   } catch (error) {
-    console.error(error);
-
+    console.error("capture-order error:", error);
     return NextResponse.json(
-      {
-        error: "Failed to capture order",
-      },
-      {
-        status: 500,
-      }
+      { error: "Failed to capture order" },
+      { status: 500 }
     );
   }
 }
