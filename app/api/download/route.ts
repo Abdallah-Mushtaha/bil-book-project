@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
     .single();
 
 if (error || !order) {
-  const fallbackUrl = process.env.BOOK_FALLBACK_URL;
+  const fallbackUrl = process.env.BOOK_BLOB_URL;
   if (fallbackUrl) {
     return NextResponse.redirect(fallbackUrl);
   }
