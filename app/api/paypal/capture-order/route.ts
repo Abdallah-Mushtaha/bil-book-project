@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { head } from "@vercel/blob";
 
 async function getPayPalAccessToken() {
   const credentials = Buffer.from(
@@ -21,21 +22,12 @@ async function getPayPalAccessToken() {
 
 async function generateTempDownloadUrl(): Promise<string> {
   const blobUrl = process.env.BOOK_BLOB_URL!;
-  const expiresTimestamp = Date.now() + 60 * 60 * 1000;
-
-  const res = await fetch(
-    `https://blob.vercel-storage.com/download?url=${encodeURIComponent(
-      blobUrl
-    )}&expires=${expiresTimestamp}`,
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.BLOB_READ_WRITE_TOKEN}`,
-      },
-    }
-  );
-
-  const data = await res.json();
-  return data.downloadUrl ?? blobUrl;
+  
+  const { downloadUrl } = await head(blobUrl, {
+    token: process.env.BLOB_READ_WRITE_TOKEN,
+  });
+  
+  return downloadUrl;
 }
 
 export async function POST(req: NextRequest) {
