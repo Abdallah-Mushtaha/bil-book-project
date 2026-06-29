@@ -1,48 +1,47 @@
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap");
 @import "tailwindcss";
 
-:root {
-  --black: #080808;
-  --off-white: #f2eee8;
-  --crimson: #8b1a1a;
-  --crimson-light: #c0392b;
-  --gray-mid: #888;
-  --gray-light: #ccc;
+@theme {
+  /* تعريف الألوان لتكون متاحة كـ utility classes مثل bg-crimson */
+  --color-black: #080808;
+  --color-off-white: #f2eee8;
+  --color-crimson: #8b1a1a;
+  --color-crimson-light: #c0392b;
+  --color-gray-mid: #888;
+  --color-gray-light: #ccc;
+
+  /* تعريف الخطوط لتكون متاحة كـ utility classes مثل font-display */
+  --font-display: "Playfair Display", serif;
+  --font-serif: "Cormorant Garamond", serif;
+  --font-sans: "Inter", sans-serif;
 }
 
+/* التنسيقات العامة */
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  background-color: var(--black);
-  color: var(--off-white);
-  font-family: "Inter", sans-serif;
+  background-color: var(--color-black);
+  color: var(--color-off-white);
+  font-family: var(--font-sans);
   overflow-x: hidden;
 }
 
-.font-display {
-  font-family: "Playfair Display", serif;
-}
-
-.font-body-serif {
-  font-family: "Cormorant Garamond", serif;
-}
-
-/* Scrollbar */
+/* تخصيص شريط التمرير */
 ::-webkit-scrollbar {
   width: 4px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--black);
+  background: var(--color-black);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--crimson);
+  background: var(--color-crimson);
   border-radius: 2px;
 }
 
-/* Selection */
+/* تخصيص التحديد */
 ::selection {
-  background: var(--crimson);
-  color: var(--off-white);
+  background: var(--color-crimson);
+  color: var(--color-off-white);
 }

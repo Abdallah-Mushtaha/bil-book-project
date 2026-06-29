@@ -24,13 +24,13 @@ export default function Hero() {
     }),
   };
 
-  const title1 = "Because I";
-  const title2 = "Loved";
+  const title1 = "Secure";
+  const title2 = "Love";
 
   return (
     <section
       ref={ref}
-      className="relative min-h-screen flex items-center overflow-hidden"
+      className="relative min-h-screen flex items-center overflow-hidden "
       style={{
         background:
           "linear-gradient(135deg, #060606 0%, #0f0608 50%, #080808 100%)",
@@ -55,7 +55,7 @@ export default function Hero() {
           className="relative w-full h-full"
         >
           <Image
-            src="/author.png"
+            src="/authorr.png"
             alt="Author"
             fill
             className="object-cover object-top"
@@ -87,10 +87,10 @@ export default function Hero() {
             }}
           >
             <Image
-              src="/book.png"
+              src="/B0oks.png"
               alt="Because I Loved - Book"
-              width={340}
-              height={510}
+              width={240}
+              height={210}
               className="drop-shadow-2xl w-full h-auto"
               style={{
                 filter: "drop-shadow(0 30px 60px rgba(139,26,26,0.35))",
@@ -112,7 +112,7 @@ export default function Hero() {
             className="text-xs tracking-[0.35em] uppercase mb-8"
             style={{ color: "var(--crimson)" }}
           >
-            A Debut Novel
+            Relationship Guide
           </motion.p>
 
           <div className="overflow-hidden mb-1">
@@ -161,8 +161,8 @@ export default function Hero() {
             className="font-body-serif text-xl leading-relaxed mb-10 max-w-md"
             style={{ color: "var(--gray-light)" }}
           >
-            A story woven from loss and longing — where every goodbye quietly
-            reshapes what it means to truly love.
+            Discover how secure attachment transforms communication, deepens
+            intimacy, and helps create relationships that truly last.
           </motion.p>
 
           <motion.div
@@ -189,7 +189,7 @@ export default function Hero() {
                 cursor: "pointer",
               }}
             >
-              Order Now
+              Get Your Copy
             </motion.button>
 
             <motion.button
@@ -208,7 +208,7 @@ export default function Hero() {
                 cursor: "pointer",
               }}
             >
-              Read Sample
+              Preview Book
               <span className="text-base">→</span>
             </motion.button>
           </motion.div>

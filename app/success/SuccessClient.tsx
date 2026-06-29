@@ -1,12 +1,44 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { motion } from "framer-motion";
+
+const Particle = () => {
+  // توليد زاوية عشوائية بين 180 و 270 درجة (للانطلاق للأعلى ولليسار بزاوية حادة)
+  const angle = (Math.random() * 90 + 180) * (Math.PI / 180);
+  const velocity = 400 + Math.random() * 300;
+
+  const randomDelay = Math.random() * 8;
+  const randomDuration = 8 + Math.random() * 4;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: 0, y: 0, rotate: 0 }}
+      animate={{
+        opacity: [0, 0.6, 0],
+        x: Math.cos(angle) * velocity, // الحركة الأفقية بزاوية
+        y: Math.sin(angle) * velocity, // الحركة الرأسية بزاوية
+        rotate: 360,
+      }}
+      transition={{
+        duration: randomDuration,
+        delay: randomDelay,
+        repeat: Infinity,
+        ease: "easeOut", // تغيير لـ easeOut ليعطي انطباع التناثر الطبيعي
+      }}
+      className="absolute text-red-500/20 text-lg pointer-events-none"
+    >
+      {Math.random() > 0.5 ? "🍃" : "🌸"}
+    </motion.div>
+  );
+};
 
 export default function SuccessClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
-  const [checking, setChecking] = useState(true);
+  const [checking, setChecking] = useState<boolean>(true);
 
   useEffect(() => {
     const justPurchased = sessionStorage.getItem("just_purchased");
@@ -15,82 +47,74 @@ export default function SuccessClient() {
       return;
     }
     setChecking(false);
-
-    const timer = setTimeout(
-      () => {
-        sessionStorage.removeItem("just_purchased");
-        router.replace("/");
-      },
-      3 * 60 * 1000,
-    );
-
-    return () => clearTimeout(timer);
   }, [router]);
 
-  if (checking) {
-    return (
-      <main
-        className="min-h-screen flex items-center justify-center"
-        style={{
-          background:
-            "linear-gradient(135deg, #060606 0%, #0f0608 50%, #080808 100%)",
-        }}
-      >
-        <p className="text-white text-sm">Verifying your purchase...</p>
-      </main>
-    );
-  }
+  if (checking) return null;
 
   return (
     <main
-      className="min-h-screen flex items-center justify-center px-4"
+      className="min-h-screen flex items-center p-8 md:p-24 relative overflow-hidden"
       style={{
         background:
           "linear-gradient(135deg, #060606 0%, #0f0608 50%, #080808 100%)",
       }}
     >
-      <div className="text-center max-w-md">
-        <div className="text-5xl mb-6">📖</div>
-        <p
-          className="text-xs tracking-[0.3em] uppercase mb-3"
-          style={{ color: "var(--crimson)" }}
-        >
-          Payment Successful
-        </p>
-        <h1
-          className="font-display text-3xl font-bold mb-4"
-          style={{ color: "var(--off-white)" }}
-        >
-          Thank you for your order
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          background:
+            "radial-gradient(ellipse at 30% 50%, rgba(139,26,26,0.08) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(139,26,26,0.04) 0%, transparent 50%)",
+        }}
+      />
+
+      {/* منطقة انطلاق الجسيمات */}
+      <div className="absolute bottom-0 right-0 w-1 h-1 z-10">
+        {[...Array(30)].map((_, i) => (
+          <div key={i} className="absolute">
+            <Particle />
+          </div>
+        ))}
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0, x: -30 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 1.2 }}
+        className="relative z-20 max-w-xl"
+      >
+        <h1 className="text-5xl md:text-7xl font-light text-white mb-8 tracking-tight leading-tight">
+          Your <br />
+          <span
+            className="font-black italic"
+            style={{ color: "var(--crimson, #b91c1c)" }}
+          >
+            masterpiece
+          </span>{" "}
+          is ready.
         </h1>
-        <p
-          className="font-body-serif text-lg mb-10"
-          style={{ color: "var(--gray-mid)" }}
-        >
-          Your copy of{" "}
-          <em style={{ color: "var(--off-white)" }}>Because I Loved</em> is
-          ready.
+
+        <p className="text-gray-400 font-light text-lg mb-12 max-w-md leading-relaxed">
+          The download link has been secured. You can now access your content
+          immediately.
         </p>
 
         {orderId && (
-          <a
+          <motion.a
+            whileHover={{ scale: 1.05, backgroundColor: "rgba(139,26,26,0.7)" }}
+            whileTap={{ scale: 0.95 }}
             href={`/api/download?orderId=${orderId}`}
-            className="inline-block px-8 py-3 rounded-full text-sm font-medium tracking-[0.15em] uppercase transition-all duration-300"
+            className="inline-block px-10 py-4 font-medium uppercase tracking-[0.2em] rounded-full transition-all duration-300"
             style={{
               background: "rgba(139,26,26,0.5)",
               border: "1px solid rgba(192,57,43,0.7)",
-              color: "var(--off-white)",
-              cursor: "pointer",
+              color: "white",
+              backdropFilter: "blur(16px)",
             }}
           >
-            Download Book
-          </a>
+            Download Access
+          </motion.a>
         )}
-
-        <p className="text-sm py-5" style={{ color: "var(--gray-mid)" }}>
-          Check your email for the download link.
-        </p>
-      </div>
+      </motion.div>
     </main>
   );
 }

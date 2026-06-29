@@ -1,4 +1,5 @@
 "use client";
+
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
@@ -8,11 +9,10 @@ export default function Author() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    // تم تغيير px-8 إلى px-4 لضمان عدم الالتصاق بالأطراف على الموبايل
     <section
       id="author"
       ref={ref}
-      className="py-32 px-4 relative overflow-hidden "
+      className="py-20 md:py-32 px-4 relative overflow-hidden"
       style={{ background: "#070103" }}
     >
       <div
@@ -23,70 +23,75 @@ export default function Author() {
         }}
       />
 
-      {/* تم تحسين الـ grid ليكون متجاوباً: عمود واحد في الموبايل، وعمودين في الشاشات المتوسطة وما فوق */}
-      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 md:gap-16 items-center relative z-10">
-        {/* Text */}
+      {/* استخدام flex-col-reverse في الموبايل لجعل الصورة أولاً */}
+      <div className="max-w-5xl mx-auto flex flex-col-reverse md:grid md:grid-cols-2 gap-12 md:gap-16 items-center relative z-10">
+        {/* Text Section */}
         <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 1, ease: "easeOut" }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center md:text-left"
         >
-          <p
-            className="text-xs tracking-[0.35em] uppercase mb-5"
-            style={{ color: "var(--crimson)" }}
+          <div
+            className="inline-flex items-center rounded-full px-4 py-1.5 mb-6 text-xs font-semibold tracking-wider uppercase"
+            style={{
+              background: "rgba(139,26,26,0.15)",
+              border: "1px solid rgba(192,57,43,0.4)",
+              color: "var(--crimson)",
+            }}
           >
-            About the author
-          </p>
+            Demo Content • Fictional Author
+          </div>
           <h2
-            className="font-display text-4xl md:text-6xl font-bold mb-8 leading-tight"
+            className="font-display text-4xl md:text-6xl font-bold mb-6 leading-tight"
             style={{ color: "var(--off-white)" }}
           >
-            Zahraa
-            <br />
+            Emily <br />
             <em className="italic" style={{ color: "var(--crimson)" }}>
-              Naserelddine
+              Carter
             </em>
           </h2>
 
           <div
-            className="space-y-5 font-body-serif text-lg md:text-xl leading-relaxed mb-10"
+            className="space-y-4 font-body-serif text-base md:text-lg leading-relaxed mb-8"
             style={{ color: "var(--gray-light)" }}
           >
             <p>
-              Zahraa Naserelddine is a writer drawn to the quiet spaces between
-              what is said and what is felt. Her work explores love, identity,
-              and the quiet revolutions that happen inside a person.
+              Emily Carter is a fictional author created exclusively for this
+              demo landing page. The biography, image, and content shown here
+              are placeholders.
             </p>
-            <p>
-              <em>Because I Loved</em> is her debut novel — a story she carried
-              for years before finding the words worthy of it.
+            <p className="hidden md:block">
+              This section illustrates how an author's profile could be
+              presented, including a short biography, featured publication, and
+              personal quote.
             </p>
           </div>
 
           <div
-            className="border-l-2 pl-6 py-1"
+            className="border-l-2 pl-4 py-1 mx-auto md:mx-0 max-w-lg"
             style={{ borderColor: "var(--crimson)" }}
           >
             <p
-              className="font-body-serif text-lg italic leading-relaxed"
+              className="font-body-serif text-base md:text-lg italic leading-relaxed"
               style={{ color: "var(--gray-mid)" }}
             >
-              "I write because silence has never been enough to hold everything
-              I've needed to say."
+              "Every great story begins with a single idea and the courage to
+              share it."
             </p>
           </div>
         </motion.div>
-        {/* Portrait */}
+
+        {/* Portrait Section */}
         <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={inView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-          className="relative px-4 md:px-0"
+          className="relative px-6 md:px-0 w-full max-w-sm mx-auto"
         >
-          <div className="relative mx-auto max-w-sm">
+          <div className="relative">
             {/* Animated Border */}
-            <div className="absolute -inset-[2px] z-0 rounded-[20px] overflow-hidden">
+            <div className="absolute -inset-[3px] z-0 rounded-[24px] overflow-hidden">
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
@@ -94,45 +99,39 @@ export default function Author() {
               />
             </div>
 
-            <div className="relative z-10 rounded-2xl overflow-hidden bg-black p-[3px]">
+            <div className="relative z-10 rounded-[20px] overflow-hidden bg-black p-[2px]">
               <Image
-                src="/author.png"
-                alt="Zahraa Naserelddine"
+                src="/authorr.png"
+                alt="Demo Author Portrait"
                 width={400}
                 height={500}
-                className="w-full object-cover rounded-xl"
+                className="w-full h-auto object-cover rounded-[18px]"
                 style={{
                   filter: "grayscale(20%) contrast(1.05)",
                   aspectRatio: "4/5",
-                  objectFit: "cover",
                 }}
               />
             </div>
 
             {/* Floating tag */}
             <motion.div
-              animate={{ y: [0, -6, 0] }}
+              animate={{ y: [0, -8, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -bottom-5 -left-2 md:-left-5 px-5 py-3 rounded-xl z-10"
+              className="absolute -bottom-4 -right-2 md:-right-5 px-4 py-3 rounded-xl z-20"
               style={{
-                background: "rgba(139,26,26,0.6)",
+                background: "rgba(139,26,26,0.8)",
                 border: "1px solid rgba(192,57,43,0.6)",
-                backdropFilter: "blur(16px)",
-                WebkitBackdropFilter: "blur(16px)",
-                boxShadow: "0 8px 30px rgba(139,26,26,0.3)",
+                backdropFilter: "blur(12px)",
               }}
             >
-              <p
-                className="font-display text-sm font-bold tracking-wide"
-                style={{ color: "var(--off-white)" }}
-              >
+              <p className="font-display text-sm font-bold text-white">
                 Debut Author
               </p>
               <p
-                className="text-xs tracking-widest uppercase mt-1"
-                style={{ color: "rgba(255,255,255,0.6)" }}
+                className="text-[10px] uppercase mt-0.5"
+                style={{ color: "rgba(255,255,255,0.7)" }}
               >
-                Because I Loved, 2025
+                Portfolio Demo
               </p>
             </motion.div>
           </div>

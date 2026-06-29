@@ -1,147 +1,149 @@
 "use client";
-import { useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const reviews = [
   {
     quote:
-      "A novel that broke me open and then stitched me back together with its final words.",
-    name: "Lina A.",
+      "One of the most practical relationship books I've ever read. It completely changed how I understand attachment.",
+    name: "Emily R.",
+    source: "Amazon",
+    stars: 5,
+    image: "https://i.pravatar.cc/100?u=1",
+  },
+  {
+    quote:
+      "Julie Menanno explains complex relationship patterns in a simple, compassionate, and actionable way.",
+    name: "David L.",
     source: "Goodreads",
     stars: 5,
+    image: "https://i.pravatar.cc/100?u=2",
   },
   {
     quote:
-      "I haven't cried this much reading since I was seventeen. Zahraa writes grief like she's lived every word.",
-    name: "Mariam K.",
-    source: "Instagram",
+      "Every couple should read this book. The communication techniques alone are worth it.",
+    name: "Sophia M.",
+    source: "Barnes & Noble",
     stars: 5,
+    image: "https://i.pravatar.cc/100?u=3",
   },
   {
     quote:
-      "Hauntingly beautiful. Every chapter is a quiet devastation you surrender to willingly.",
-    name: "Sara R.",
-    source: "Book Club Review",
+      "Insightful, practical, and deeply reassuring. Secure Love gave me a completely new perspective on healthy relationships.",
+    name: "Jessica T.",
+    source: "Reader Review",
     stars: 5,
-  },
-  {
-    quote:
-      "This is the kind of story that doesn't leave you. I found myself thinking about the characters weeks later.",
-    name: "Nour T.",
-    source: "Amazon Review",
-    stars: 5,
+    image: "https://i.pravatar.cc/100?u=4",
   },
 ];
 
 export default function Readers() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
   const [active, setActive] = useState(0);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActive((prev) => (prev + 1) % reviews.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    // تم تغيير px-8 إلى px-4 لضمان عدم الالتصاق بالأطراف على الموبايل
     <section
       id="readers"
-      ref={ref}
-      className="py-32 px-4 relative overflow-hidden "
+      className="py-32 px-4 relative overflow-hidden"
       style={{ background: "var(--black)" }}
     >
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse at 50% 0%, rgba(139,26,26,0.07) 0%, transparent 60%)",
+            "radial-gradient(ellipse at 50% 0%, rgba(139,26,26,0.1) 0%, transparent 70%)",
         }}
       />
 
-      <div className="max-w-5xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-20"
-        >
+      <div className="max-w-3xl mx-auto relative z-10">
+        <div className="text-center mb-16">
           <p
             className="text-xs tracking-[0.35em] uppercase mb-4"
             style={{ color: "var(--crimson)" }}
           >
-            What readers say
+            Reader Reviews
           </p>
           <h2
             className="font-display text-4xl md:text-5xl font-bold"
             style={{ color: "var(--off-white)" }}
           >
-            Voices from the{" "}
+            Loved by{" "}
             <em className="italic" style={{ color: "var(--crimson)" }}>
-              readers
+              Readers
             </em>
           </h2>
-        </motion.div>
+        </div>
 
-        {/* Main review card */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative min-h-[300px]"
-        >
-          {reviews.map((review, i) => (
+        <div className="relative min-h-[400px]">
+          <AnimatePresence mode="wait">
             <motion.div
-              key={i}
-              initial={false}
-              animate={{
-                opacity: i === active ? 1 : 0,
-                y: i === active ? 0 : 20,
-              }}
-              transition={{ duration: 0.5 }}
-              className="absolute inset-0 flex flex-col items-center justify-center text-center px-4"
-              style={{ pointerEvents: i === active ? "auto" : "none" }}
+              key={active}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.6 }}
+              className="absolute inset-0 bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2rem] p-10 md:p-12 shadow-2xl flex flex-col items-center text-center"
             >
-              {/* Quote mark */}
               <div
-                className="font-display text-6xl md:text-8xl leading-none mb-4"
-                style={{ color: "var(--crimson)", opacity: 0.3 }}
+                className="text-6xl mb-6 opacity-30"
+                style={{
+                  color: "var(--crimson)",
+                  fontFamily: "var(--font-display)",
+                }}
               >
                 "
               </div>
+
               <p
-                className="font-body-serif text-xl md:text-3xl italic leading-relaxed mb-8 max-w-3xl"
+                className="font-body-serif text-xl md:text-3xl italic leading-relaxed mb-10"
                 style={{ color: "var(--off-white)" }}
               >
-                {review.quote}
+                {reviews[active].quote}
               </p>
-              <div className="flex gap-1 mb-4">
-                {[...Array(review.stars)].map((_, s) => (
-                  <span key={s} style={{ color: "var(--crimson)" }}>
-                    ★
-                  </span>
-                ))}
-              </div>
-              <p
-                className="text-sm tracking-widest uppercase"
-                style={{ color: "var(--gray-mid)" }}
-              >
-                {review.name} · {review.source}
-              </p>
-            </motion.div>
-          ))}
-        </motion.div>
 
-        {/* Dots nav */}
+              <div className="flex items-center gap-4 mt-auto">
+                <img
+                  src={reviews[active].image}
+                  alt={reviews[active].name}
+                  className="w-16 h-16 rounded-full border-2 object-cover"
+                  style={{ borderColor: "var(--crimson)" }}
+                />
+                <div className="text-left">
+                  <p
+                    className="font-bold"
+                    style={{ color: "var(--off-white)" }}
+                  >
+                    {reviews[active].name}
+                  </p>
+                  <p
+                    className="text-xs tracking-widest uppercase"
+                    style={{ color: "var(--gray-mid)" }}
+                  >
+                    {reviews[active].source}
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
         <div className="flex justify-center gap-3 mt-16">
           {reviews.map((_, i) => (
             <button
               key={i}
               onClick={() => setActive(i)}
-              className="transition-all duration-300"
+              className="transition-all duration-500 rounded-full"
               style={{
-                width: i === active ? "32px" : "8px",
-                height: "8px",
-                borderRadius: "4px",
+                width: i === active ? "40px" : "10px",
+                height: "10px",
                 backgroundColor:
                   i === active ? "var(--crimson)" : "rgba(255,255,255,0.2)",
-                border: "none",
-                cursor: "pointer",
               }}
             />
           ))}
