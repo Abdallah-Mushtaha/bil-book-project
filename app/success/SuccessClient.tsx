@@ -52,21 +52,18 @@ export default function SuccessClient() {
     >
       <div className="text-center max-w-md">
         <div className="text-5xl mb-6">📖</div>
-
         <p
           className="text-xs tracking-[0.3em] uppercase mb-3"
           style={{ color: "var(--crimson)" }}
         >
           Payment Successful
         </p>
-
         <h1
           className="font-display text-3xl font-bold mb-4"
           style={{ color: "var(--off-white)" }}
         >
           Thank you for your order
         </h1>
-
         <p
           className="font-body-serif text-lg mb-10"
           style={{ color: "var(--gray-mid)" }}
@@ -75,14 +72,9 @@ export default function SuccessClient() {
           <em style={{ color: "var(--off-white)" }}>Because I Loved</em> is
           ready.
         </p>
-
-        {downloadUrl ? (
+        {downloadUrl && (
           <Link
             href={downloadUrl}
-            target="_blank"
-            onClick={() => {
-              sessionStorage.removeItem("just_purchased"); // ✅ امسح هنا بس
-            }}
             className="inline-block px-8 py-3 rounded-full text-sm font-medium tracking-[0.15em] uppercase transition-all duration-300"
             style={{
               background: "rgba(139,26,26,0.5)",
@@ -92,11 +84,11 @@ export default function SuccessClient() {
           >
             Download Book
           </Link>
-        ) : (
-          <p className="text-sm" style={{ color: "var(--gray-mid)" }}>
-            Check your email for the download link.
-          </p>
         )}
+
+        <p className="text-sm py-5" style={{ color: "var(--gray-mid)" }}>
+          Check your email for the download link.
+        </p>
       </div>
     </main>
   );
