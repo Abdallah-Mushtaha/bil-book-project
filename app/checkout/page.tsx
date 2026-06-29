@@ -54,9 +54,7 @@ export default function CheckoutPage() {
             const result = await res.json();
             if (result.success) {
               sessionStorage.setItem("just_purchased", "true");
-              router.push(
-                `/success?downloadUrl=${encodeURIComponent(result.downloadUrl)}`,
-              );
+              router.push(`/success?orderId=${result.orderId}`);
             } else {
               setErrorMsg(
                 "Payment was processed but something went wrong. Please contact support.",

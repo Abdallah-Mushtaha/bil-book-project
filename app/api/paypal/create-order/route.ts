@@ -21,7 +21,7 @@ async function getPayPalAccessToken() {
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, userId } = await req.json(); // ✅ استقبل userId من الـ client
+    const { email, userId } = await req.json();
 
     const accessToken = await getPayPalAccessToken();
 
@@ -35,10 +35,7 @@ export async function POST(req: NextRequest) {
         intent: "CAPTURE",
         purchase_units: [
           {
-            amount: {
-              currency_code: "USD",
-              value: "9.99",
-            },
+            amount: { currency_code: "USD", value: "9.99" },
             description: "Because I Loved - Digital Edition",
           },
         ],
@@ -47,15 +44,20 @@ export async function POST(req: NextRequest) {
 
     const order = await res.json();
 
-    await supabase.from("orders").insert({
+    const { error } = await supabase.from("orders").insert({
       email,
-      user_id: userId, // ✅
+      user_id: userId,
       paypal_order_id: order.id,
       status: "pending",
     });
 
+    if (error) {
+      console.error("Supabase insert error:", error);
+    }
+
     return NextResponse.json({ orderId: order.id });
   } catch (error) {
+    console.error("create-order error:", error);
     return NextResponse.json({ error: "Failed to create order" }, { status: 500 });
   }
 }

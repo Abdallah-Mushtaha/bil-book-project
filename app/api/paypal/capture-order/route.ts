@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
-import { head } from "@vercel/blob";
 
 async function getPayPalAccessToken() {
   const credentials = Buffer.from(
@@ -18,17 +17,6 @@ async function getPayPalAccessToken() {
 
   const data = await res.json();
   return data.access_token;
-}
-
-async function generateTempDownloadUrl(): Promise<string> {
-  const blobUrl = process.env.BOOK_BLOB_URL!;
-  
-  const result = await head(blobUrl, {
-    token: process.env.BLOB_READ_WRITE_TOKEN,
-  });
-  
-  console.log("head result:", JSON.stringify(result));
-  return result.downloadUrl;
 }
 
 export async function POST(req: NextRequest) {
@@ -54,28 +42,18 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false }, { status: 400 });
     }
 
-    const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
-    const downloadUrl = await generateTempDownloadUrl();
-    console.log("Final downloadUrl:", downloadUrl);
-
-    await supabase
+    const { error } = await supabase
       .from("orders")
-      .update({
-        status: "completed",
-        download_url: downloadUrl,
-        download_expires_at: expiresAt.toISOString(),
-      })
+      .update({ status: "completed" })
       .eq("paypal_order_id", orderId);
 
-    return NextResponse.json({
-      success: true,
-      downloadUrl,
-    });
+    if (error) {
+      console.error("Supabase update error:", error);
+    }
+
+    return NextResponse.json({ success: true, orderId });
   } catch (error) {
     console.error("capture-order error:", error);
-    return NextResponse.json(
-      { error: "Failed to capture order" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to capture order" }, { status: 500 });
   }
 }

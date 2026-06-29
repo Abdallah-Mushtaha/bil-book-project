@@ -6,8 +6,9 @@ import Link from "next/link";
 export default function SuccessClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const downloadUrl = searchParams.get("downloadUrl");
+  const orderId = searchParams.get("orderId");
   const [checking, setChecking] = useState(true);
+  const [downloading, setDownloading] = useState(false); // ← أضف هاد
 
   useEffect(() => {
     const justPurchased = sessionStorage.getItem("just_purchased");
@@ -27,6 +28,13 @@ export default function SuccessClient() {
 
     return () => clearTimeout(timer);
   }, [router]);
+
+  const handleDownload = () => {
+    if (downloading) return;
+    setDownloading(true);
+    // بعد ما يبدأ التنزيل رجّع الزر بعد 5 ثواني
+    setTimeout(() => setDownloading(false), 5000);
+  };
 
   if (checking) {
     return (
@@ -72,17 +80,31 @@ export default function SuccessClient() {
           <em style={{ color: "var(--off-white)" }}>Because I Loved</em> is
           ready.
         </p>
-        {downloadUrl && (
+
+        {orderId && (
           <Link
-            href={downloadUrl}
+            href={`/api/download?orderId=${orderId}`}
+            target="_blank"
+            onClick={(e) => {
+              if (downloading) {
+                e.preventDefault();
+                return;
+              }
+              setDownloading(true);
+              setTimeout(() => setDownloading(false), 5000);
+            }}
             className="inline-block px-8 py-3 rounded-full text-sm font-medium tracking-[0.15em] uppercase transition-all duration-300"
             style={{
-              background: "rgba(139,26,26,0.5)",
-              border: "1px solid rgba(192,57,43,0.7)",
+              background: downloading
+                ? "rgba(80,80,80,0.5)"
+                : "rgba(139,26,26,0.5)",
+              border: `1px solid ${downloading ? "rgba(120,120,120,0.5)" : "rgba(192,57,43,0.7)"}`,
               color: "var(--off-white)",
+              cursor: downloading ? "not-allowed" : "pointer",
+              opacity: downloading ? 0.6 : 1,
             }}
           >
-            Download Book
+            {downloading ? "Downloading..." : "Download Book"}
           </Link>
         )}
 
