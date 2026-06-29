@@ -20,9 +20,13 @@ export async function GET(req: NextRequest) {
     .eq("status", "completed")
     .single();
 
-  if (error || !order) {
-    return NextResponse.json({ error: "No purchase found" }, { status: 403 });
+if (error || !order) {
+  const fallbackUrl = process.env.BOOK_FALLBACK_URL;
+  if (fallbackUrl) {
+    return NextResponse.redirect(fallbackUrl);
   }
+  return NextResponse.json({ error: "No purchase found" }, { status: 403 });
+}
 
   const { data, error: storageError } = await supabaseAdmin.storage
     .from("books")
