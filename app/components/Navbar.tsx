@@ -53,7 +53,7 @@ export default function Navbar() {
             {isSignedIn && (
               <div className="flex items-center gap-3 mb-6 pb-6 border-b border-white/5">
                 <div className="scale-110">
-                  <UserButton afterSignOutUrl="/" />
+                  <UserButton />
                 </div>
                 <span className="text-white text-sm font-medium">
                   {user?.firstName}
