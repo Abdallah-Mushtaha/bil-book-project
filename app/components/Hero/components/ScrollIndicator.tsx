@@ -12,7 +12,7 @@ function ScrollIndicatorComponent() {
         opacity: { delay: 2, duration: 1 },
         y: { delay: 2, duration: 1.5, repeat: Infinity, ease: "easeInOut" },
       }}
-      className="absolute -bottom-11 md:bottom-20 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
+      className="absolute -bottom-11 md:bottom-0 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
     >
       <span
         className="text-xs tracking-[0.3em] uppercase drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"

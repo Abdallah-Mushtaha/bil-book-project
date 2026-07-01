@@ -1,12 +1,15 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 export const CallToAction = ({
   inView,
   ref,
+  onPreviewClick,
 }: {
   inView: boolean;
   ref: any;
+  onPreviewClick: () => void;
 }) => (
   <section
     ref={ref}
@@ -67,9 +70,8 @@ export const CallToAction = ({
         </p>
 
         <div className="flex flex-col items-center justify-center gap-4 px-4">
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+          <Link
+            href="/checkout"
             className="w-full max-w-[280px] py-4 text-xs tracking-[0.2em] uppercase font-bold rounded-full transition-all duration-300"
             style={{
               background: "var(--crimson)",
@@ -77,13 +79,19 @@ export const CallToAction = ({
               boxShadow: "0 10px 30px -10px rgba(139,26,26,0.5)",
             }}
           >
-            Get Your Copy
-          </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              Get Your Copy
+            </motion.button>
+          </Link>
 
           <motion.button
             whileHover={{ backgroundColor: "rgba(255,255,255,0.1)" }}
             className="w-full max-w-[280px] py-4 text-xs tracking-[0.2em] uppercase font-medium rounded-full border border-white/10 backdrop-blur-md transition-all duration-300"
             style={{ color: "var(--off-white)" }}
+            onClick={onPreviewClick}
           >
             Read Preview
           </motion.button>

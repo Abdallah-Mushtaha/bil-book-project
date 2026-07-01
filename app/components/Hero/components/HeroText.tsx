@@ -10,6 +10,7 @@ import {
   HERO_TITLE_LINE_2,
 } from "./Hero.constants";
 import type { HeroTextProps } from "./Hero.types";
+import Link from "next/link";
 
 function HeroTextComponent({ textY, opacity, onPreviewClick }: HeroTextProps) {
   return (
@@ -59,25 +60,27 @@ function HeroTextComponent({ textY, opacity, onPreviewClick }: HeroTextProps) {
           transition={{ duration: 0.8, delay: 1.4 }}
           className="flex items-center gap-4 flex-wrap"
         >
-          <motion.button
-            whileHover={{
-              scale: 1.05,
-              backgroundColor: "rgba(139,26,26,0.7)",
-            }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-3 text-sm tracking-[0.15em] uppercase font-medium rounded-full transition-all duration-300 cursor-pointer"
-            style={{
-              background: "rgba(139,26,26,0.5)",
-              border: "1px solid rgba(192,57,43,0.7)",
-              color: "var(--off-white)",
-              backdropFilter: "blur(16px)",
-              WebkitBackdropFilter: "blur(16px)",
-              boxShadow:
-                "0 4px 24px rgba(139,26,26,0.3), inset 0 1px 0 rgba(255,255,255,0.08)",
-            }}
-          >
-            {HERO_CTA_PRIMARY}
-          </motion.button>
+          <Link href="/checkout">
+            <motion.button
+              whileHover={{
+                scale: 1.05,
+                backgroundColor: "rgba(139,26,26,0.7)",
+              }}
+              whileTap={{ scale: 0.95 }}
+              className="px-8 py-3 text-sm tracking-[0.15em] uppercase font-medium rounded-full transition-all duration-300 cursor-pointer"
+              style={{
+                background: "rgba(139,26,26,0.5)",
+                border: "1px solid rgba(192,57,43,0.7)",
+                color: "var(--off-white)",
+                backdropFilter: "blur(16px)",
+                WebkitBackdropFilter: "blur(16px)",
+                boxShadow:
+                  "0 4px 24px rgba(139,26,26,0.3), inset 0 1px 0 rgba(255,255,255,0.08)",
+              }}
+            >
+              {HERO_CTA_PRIMARY}
+            </motion.button>
+          </Link>
 
           <motion.button
             whileHover={{
