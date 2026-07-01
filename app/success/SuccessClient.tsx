@@ -1,44 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
-
-const Particle = () => {
-  // توليد زاوية عشوائية بين 180 و 270 درجة (للانطلاق للأعلى ولليسار بزاوية حادة)
-  const angle = (Math.random() * 90 + 180) * (Math.PI / 180);
-  const velocity = 400 + Math.random() * 300;
-
-  const randomDelay = Math.random() * 8;
-  const randomDuration = 8 + Math.random() * 4;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: 0, y: 0, rotate: 0 }}
-      animate={{
-        opacity: [0, 0.6, 0],
-        x: Math.cos(angle) * velocity, // الحركة الأفقية بزاوية
-        y: Math.sin(angle) * velocity, // الحركة الرأسية بزاوية
-        rotate: 360,
-      }}
-      transition={{
-        duration: randomDuration,
-        delay: randomDelay,
-        repeat: Infinity,
-        ease: "easeOut", // تغيير لـ easeOut ليعطي انطباع التناثر الطبيعي
-      }}
-      className="absolute text-red-500/20 text-lg pointer-events-none"
-    >
-      {Math.random() > 0.5 ? "🍃" : "🌸"}
-    </motion.div>
-  );
-};
+import { HomeButton } from "../components/SuccessClientComponents/HomeButton";
+import { Particle } from "../components/SuccessClientComponents/Particle";
 
 export default function SuccessClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
   const [checking, setChecking] = useState<boolean>(true);
+
+  // تحسين الأداء: تثبيت قيم الجسيمات لمنع إعادة توليدها عند كل Render
+  const particles = useMemo(() => [...Array(30)], []);
 
   useEffect(() => {
     const justPurchased = sessionStorage.getItem("just_purchased");
@@ -59,6 +34,8 @@ export default function SuccessClient() {
           "linear-gradient(135deg, #060606 0%, #0f0608 50%, #080808 100%)",
       }}
     >
+      <HomeButton onClick={() => router.push("/")} />
+
       <div
         className="absolute inset-0 z-0"
         style={{
@@ -67,9 +44,8 @@ export default function SuccessClient() {
         }}
       />
 
-      {/* منطقة انطلاق الجسيمات */}
       <div className="absolute bottom-0 right-0 w-1 h-1 z-10">
-        {[...Array(30)].map((_, i) => (
+        {particles.map((_, i) => (
           <div key={i} className="absolute">
             <Particle />
           </div>

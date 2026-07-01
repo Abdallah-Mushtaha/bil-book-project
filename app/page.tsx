@@ -1,10 +1,20 @@
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import WhoIsItFor from "./components/WhoIsItFor";
-import AboutBook from "./components/AboutBook";
-import Readers from "./components/Readers";
-import Author from "./components/Author";
-import CtaFooter from "./components/CtaFooter";
+import WhoIsItFor from "./components/WhoIsItFor/WhoIsItFor";
+import AboutBook from "./components/About/AboutBook";
+import Readers from "./components/Readers/Readers";
+import Author from "./components/Author/Author";
+import CtaFooter from "./components/CtaFooter/CtaFooter";
+import { Metadata } from "next";
+import Navbar from "./components/navbar/Navbar";
+import Hero from "./components/Hero/Hero";
+
+export const metadata: Metadata = {
+  title: "Secure Love — Emily Carter",
+  description: "A debut novel about love, loss, and the courage to feel again.",
+
+  icons: {
+    icon: "/SiteLogo.png",
+  },
+};
 
 export default function Home() {
   return (

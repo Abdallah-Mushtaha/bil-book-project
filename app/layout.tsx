@@ -1,10 +1,14 @@
-import type { Metadata, Viewport } from "next"; // أضفنا Viewport
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
-  title: "Because I Loved — Zahraa Naserelddine",
+  title: "Secure Love — Emily Carter",
   description: "A debut novel about love, loss, and the courage to feel again.",
+
+  icons: {
+    icon: "/SiteLogo.png",
+  },
 };
 
 export const viewport: Viewport = {

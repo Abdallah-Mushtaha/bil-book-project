@@ -2,26 +2,24 @@ import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 
 export async function GET(req: NextRequest) {
-  try {
-    const userId = req.nextUrl.searchParams.get("userId");
+  const { searchParams } = new URL(req.url);
+  const userId = searchParams.get("userId");
 
-    if (!userId) {
-      return NextResponse.json({ hasPurchased: false });
-    }
-
-    const { data: order, error } = await supabase
-      .from("orders")
-      .select("status")
-      .eq("user_id", userId)
-      .eq("status", "completed")
-      .single();
-
-    console.log("order:", order);
-    console.log("error:", error);
-
-    return NextResponse.json({ hasPurchased: !!order });
-  } catch (err) {
-    console.error("verify-purchase error:", err);
-    return NextResponse.json({ hasPurchased: false }, { status: 500 });
+  if (!userId) {
+    return NextResponse.json({ orders: [] });
   }
+
+  const { data: orders, error } = await supabase
+    .from("orders")
+    .select("*")
+    .eq("user_id", userId) 
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  const uniqueOrders = Array.from(new Map(orders.map(item => [item.paypal_order_id, item])).values());
+
+  return NextResponse.json({ orders: uniqueOrders });
 }
