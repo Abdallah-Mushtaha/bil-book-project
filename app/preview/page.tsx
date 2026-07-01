@@ -98,6 +98,7 @@ export default function PreviewBook() {
       </h1>
 
       <div className="relative filter drop-shadow-[0_0_40px_rgba(220,38,38,0.3)]">
+        {/* @ts-ignore */}
         <HTMLFlipBook
           key={isPortrait ? "portrait" : "spread"}
           ref={bookRef}
