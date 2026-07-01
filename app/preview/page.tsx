@@ -92,7 +92,7 @@ export default function PreviewBook() {
   }, []);
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-[radial-gradient(circle_at_center,_#1a0505_0%,_#000000_100%)] overflow-hidden px-3 py-6 sm:p-8">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center overflow-hidden px-3 py-6 sm:p-8">
       <h1 className="mb-4 sm:mb-12 mt-8 sm:mt-0 text-white/50 text-xs sm:text-lg tracking-[0.2em] sm:tracking-[0.3em] uppercase text-center px-4">
         Book preview — Secure Love
       </h1>

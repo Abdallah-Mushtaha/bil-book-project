@@ -37,7 +37,7 @@ function PreviewModalComponent({ isOpen, onClose }: PreviewModalProps) {
               style={{ maxHeight: "100dvh" }}
             >
               <div
-                className="relative w-full h-full overflow-hidden sm:rounded-3xl border border-white/10 bg-black/40 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
+                className="relative w-full h-full overflow-hidden"
                 style={{ maxHeight: "100dvh" }}
               >
                 <div className="w-full h-full max-h-[100dvh] overflow-y-auto overscroll-contain">
