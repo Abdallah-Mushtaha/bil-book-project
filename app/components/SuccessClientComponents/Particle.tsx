@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-export const Particle = (): JSX.Element => {
+export const Particle = () => {
   const angle: number = (Math.random() * 90 + 180) * (Math.PI / 180);
   const velocity: number = 400 + Math.random() * 300;
 
