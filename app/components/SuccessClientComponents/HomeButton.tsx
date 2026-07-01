@@ -1,8 +1,4 @@
-export const HomeButton = ({
-  onClick,
-}: {
-  onClick: () => void;
-}): JSX.Element => (
+export const HomeButton = ({ onClick }: { onClick: () => void }) => (
   <button
     onClick={onClick}
     className="absolute  z-50  rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all backdrop-blur-md cursor-pointer"
