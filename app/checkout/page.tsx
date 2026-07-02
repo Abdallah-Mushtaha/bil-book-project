@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { ErrorMessage } from "../components/checkout/ErrorMessage";
@@ -12,10 +11,11 @@ import { PayPalSection } from "../components/CheckoutPage/PayPalSection";
 export default function CheckoutPage() {
   const { user, isLoaded } = useUser();
   const router = useRouter();
-  const [errorMsg, setErrorMsg] = useState("");
-  const [isPaymentStarted, setIsPaymentStarted] = useState(false);
-  const [isChecking, setIsChecking] = useState(true);
-  const [alreadyPurchased, setAlreadyPurchased] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string>("");
+  const [isPaymentStarted, setIsPaymentStarted] = useState<boolean>(false);
+  const [isChecking, setIsChecking] = useState<boolean>(true);
+  const [alreadyPurchased, setAlreadyPurchased] = useState<boolean>(false);
+
   const email = user?.primaryEmailAddress?.emailAddress ?? "";
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function CheckoutPage() {
 
     fetch(`/api/check-purchase?userId=${user.id}`)
       .then((res) => res.json())
-      .then((data) => {
+      .then((data: { purchased: boolean }) => {
         if (data.purchased) {
           setAlreadyPurchased(true);
         }
@@ -55,8 +55,13 @@ export default function CheckoutPage() {
             <ErrorMessage message={errorMsg} />
 
             {isChecking ? (
-              <div className="text-gray-400 text-sm animate-pulse">
-                Loading...
+              <div className="space-y-8 w-full max-w-sm">
+                <div className="space-y-2">
+                  <div className="h-3 w-20 bg-gray-800 rounded animate-pulse"></div>
+                  <div className="h-6 w-full bg-gray-800 rounded animate-pulse"></div>
+                </div>
+                <div className="h-12 w-full bg-gray-800 rounded-full animate-pulse"></div>
+                <div className="h-12 w-full bg-gray-800 rounded-full animate-pulse"></div>
               </div>
             ) : alreadyPurchased ? (
               <AlreadyPurchased
@@ -74,7 +79,11 @@ export default function CheckoutPage() {
                 </div>
 
                 <div
-                  className={`mt-8 p-4 rounded-2xl transition-all duration-700 ease-in-out ${isPaymentStarted ? "relative group overflow-hidden bg-white/80 backdrop-blur-md shadow-[0_0_30px_rgba(255,255,255,0.3)] border border-white/40" : "bg-transparent border border-transparent"}`}
+                  className={`mt-8 p-4 rounded-2xl transition-all duration-700 ease-in-out ${
+                    isPaymentStarted
+                      ? "relative group overflow-hidden bg-white/80 backdrop-blur-md shadow-[0_0_30px_rgba(255,255,255,0.3)] border border-white/40"
+                      : "bg-transparent border border-transparent"
+                  }`}
                 >
                   <PayPalSection
                     isLoaded={isLoaded}
@@ -91,16 +100,71 @@ export default function CheckoutPage() {
         </div>
       </div>
 
-      <div className="absolute inset-0 lg:relative lg:w-1/2 lg:rounded-l-[100px] overflow-hidden z-0">
+      <div className="absolute inset-0 lg:relative lg:w-1/2 lg:rounded-l-[100px] overflow-hidden animate-pulse-shadow z-0">
         <Image
           src="/author.png"
           alt="Checkout"
           fill
           className="object-cover"
+          style={{ objectPosition: "center" }}
           priority
         />
         <div className="absolute inset-0 bg-black/70 lg:hidden" />
       </div>
+
+      <style jsx global>{`
+        @keyframes pulse-shadow {
+          0%,
+          100% {
+            box-shadow: -20px 0 50px rgba(220, 38, 38, 0.2);
+          }
+          50% {
+            box-shadow: -30px 0 70px rgba(220, 38, 38, 0.4);
+          }
+        }
+        .animate-pulse-shadow {
+          animation: pulse-shadow 4s ease-in-out infinite;
+        }
+        @keyframes shine {
+          0% {
+            transform: translate(-100%, -100%) rotate(12deg);
+          }
+          100% {
+            transform: translate(100%, 100%) rotate(12deg);
+          }
+        }
+        @keyframes tilt {
+          0%,
+          50%,
+          100% {
+            transform: rotate(0deg);
+          }
+          25% {
+            transform: rotate(1deg);
+          }
+          75% {
+            transform: rotate(-1deg);
+          }
+        }
+        @keyframes glint {
+          0%,
+          100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.8;
+          }
+        }
+        .animate-shine {
+          animation: shine 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .animate-tilt {
+          animation: tilt 10s linear infinite;
+        }
+        .animate-glint {
+          animation: glint 3s ease-in-out infinite;
+        }
+      `}</style>
     </section>
   );
 }

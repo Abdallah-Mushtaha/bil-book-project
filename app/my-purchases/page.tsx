@@ -13,19 +13,49 @@ export default function MyPurchasesPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!isLoaded || !user) return;
+    if (!isLoaded) return;
+
+    if (!user) {
+      setLoading(false);
+      return;
+    }
+
     fetch(`/api/my-purchases?userId=${user.id}`)
       .then((res) => res.json())
       .then((data) => {
         setOrders(data.orders ?? []);
         setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
       });
   }, [isLoaded, user]);
 
+  // حالة التحميل أثناء جلب البيانات من Clerk أو الـ API
   if (!isLoaded || loading) {
     return (
       <main className="min-h-screen py-20 px-4 bg-[#060606] flex items-center justify-center">
         <SkeletonLoader />
+      </main>
+    );
+  }
+
+  // حالة عدم تسجيل الدخول
+  if (!user) {
+    return (
+      <main className="min-h-screen py-20 px-4 bg-[#060606] flex items-center justify-center">
+        <div className="text-white text-center p-8 border border-white/10 rounded-2xl bg-white/5">
+          <h2 className="text-2xl font-bold mb-4">Access Denied</h2>
+          <p className="text-gray-400 mb-6">
+            Please sign in to view your purchases.
+          </p>
+          <Link
+            href="/sign-in"
+            className="text-red-500 hover:text-red-400 underline"
+          >
+            Go to Sign In
+          </Link>
+        </div>
       </main>
     );
   }

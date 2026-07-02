@@ -1,8 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs/server";
 import { supabase } from "@/lib/supabase";
 
-export async function GET(req: NextRequest) {
-  const userId = req.nextUrl.searchParams.get("userId");
+export async function GET() {
+  const { userId } = await auth(); 
 
   if (!userId) {
     return NextResponse.json({ purchased: false });

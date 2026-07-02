@@ -1,10 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs/server";
 import { supabase } from "@/lib/supabase";
 
-export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const userId = searchParams.get("userId");
-
+export async function GET() {
+  const { userId } = await auth(); 
   if (!userId) {
     return NextResponse.json({ orders: [] });
   }
@@ -12,7 +11,8 @@ export async function GET(req: NextRequest) {
   const { data: orders, error } = await supabase
     .from("orders")
     .select("*")
-    .eq("user_id", userId) 
+    .eq("user_id", userId)
+    .eq("status", "COMPLETED")
     .order("created_at", { ascending: false });
 
   if (error) {

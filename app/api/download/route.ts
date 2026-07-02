@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs/server";
 import { createClient } from "@supabase/supabase-js";
 
 export async function GET(req: NextRequest) {
+  const { userId } = await auth(); 
   const orderId = req.nextUrl.searchParams.get("orderId");
   const fallbackUrl = process.env.FALLBACK_URL!;
 
-  if (!orderId) {
+  if (!userId || !orderId) { 
     return NextResponse.redirect(fallbackUrl);
   }
 
@@ -19,6 +21,7 @@ export async function GET(req: NextRequest) {
       .from("orders")
       .select("status")
       .eq("paypal_order_id", orderId)
+      .eq("user_id", userId)
       .eq("status", "completed")
       .single();
 

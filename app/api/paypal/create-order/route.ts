@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { auth } from "@clerk/nextjs/server";
 
 async function getPayPalAccessToken() {
   const credentials = Buffer.from(
@@ -20,8 +21,12 @@ async function getPayPalAccessToken() {
 }
 
 export async function POST(req: NextRequest) {
+  const { userId } = await auth();
+  if (!userId) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
   try {
-    const { email, userId } = await req.json();
+    const { email } = await req.json();
 
     // 1. فحص هل المستخدم اشترى الكتاب مسبقاً (status: completed)
     const { data: existingOrder, error: checkError } = await supabase

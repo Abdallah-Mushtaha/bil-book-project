@@ -2,7 +2,6 @@
 @import "tailwindcss";
 
 @theme {
-  /* تعريف الألوان لتكون متاحة كـ utility classes مثل bg-crimson */
   --color-black: #080808;
   --color-off-white: #f2eee8;
   --color-crimson: #8b1a1a;
@@ -10,13 +9,11 @@
   --color-gray-mid: #888;
   --color-gray-light: #ccc;
 
-  /* تعريف الخطوط لتكون متاحة كـ utility classes مثل font-display */
   --font-display: "Playfair Display", serif;
   --font-serif: "Cormorant Garamond", serif;
   --font-sans: "Inter", sans-serif;
 }
 
-/* التنسيقات العامة */
 html {
   scroll-behavior: smooth;
 }
@@ -28,7 +25,6 @@ body {
   overflow-x: hidden;
 }
 
-/* تخصيص شريط التمرير */
 ::-webkit-scrollbar {
   width: 4px;
 }
@@ -40,7 +36,6 @@ body {
   border-radius: 2px;
 }
 
-/* تخصيص التحديد */
 ::selection {
   background: var(--color-crimson);
   color: var(--color-off-white);

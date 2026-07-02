@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { HomeButton } from "../components/SuccessClientComponents/HomeButton";
 import { Particle } from "../components/SuccessClientComponents/Particle";
+import Link from "next/link";
 
 export default function SuccessClient() {
   const router = useRouter();
@@ -12,7 +13,6 @@ export default function SuccessClient() {
   const orderId = searchParams.get("orderId");
   const [checking, setChecking] = useState<boolean>(true);
 
-  // تحسين الأداء: تثبيت قيم الجسيمات لمنع إعادة توليدها عند كل Render
   const particles = useMemo(() => [...Array(30)], []);
 
   useEffect(() => {
@@ -75,20 +75,28 @@ export default function SuccessClient() {
         </p>
 
         {orderId && (
-          <motion.a
-            whileHover={{ scale: 1.05, backgroundColor: "rgba(139,26,26,0.7)" }}
-            whileTap={{ scale: 0.95 }}
+          <Link
             href={`/api/download?orderId=${orderId}`}
-            className="inline-block px-10 py-4 font-medium uppercase tracking-[0.2em] rounded-full transition-all duration-300"
-            style={{
-              background: "rgba(139,26,26,0.5)",
-              border: "1px solid rgba(192,57,43,0.7)",
-              color: "white",
-              backdropFilter: "blur(16px)",
-            }}
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Download Access
-          </motion.a>
+            <motion.a
+              whileHover={{
+                scale: 1.05,
+                backgroundColor: "rgba(139,26,26,0.7)",
+              }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-block px-10 py-4 font-medium uppercase tracking-[0.2em] rounded-full transition-all duration-300"
+              style={{
+                background: "rgba(139,26,26,0.5)",
+                border: "1px solid rgba(192,57,43,0.7)",
+                color: "white",
+                backdropFilter: "blur(16px)",
+              }}
+            >
+              Download Access
+            </motion.a>
+          </Link>
         )}
       </motion.div>
     </main>
