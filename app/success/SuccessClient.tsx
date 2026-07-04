@@ -75,28 +75,25 @@ export default function SuccessClient() {
         </p>
 
         {orderId && (
-          <Link
+          <motion.a
             href={`/api/download?orderId=${orderId}`}
             target="_blank"
             rel="noopener noreferrer"
+            whileHover={{
+              scale: 1.05,
+              backgroundColor: "rgba(139,26,26,0.7)",
+            }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-block px-10 py-4 font-medium uppercase tracking-[0.2em] rounded-full transition-all duration-300"
+            style={{
+              background: "rgba(139,26,26,0.5)",
+              border: "1px solid rgba(192,57,43,0.7)",
+              color: "white",
+              backdropFilter: "blur(16px)",
+            }}
           >
-            <motion.a
-              whileHover={{
-                scale: 1.05,
-                backgroundColor: "rgba(139,26,26,0.7)",
-              }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-block px-10 py-4 font-medium uppercase tracking-[0.2em] rounded-full transition-all duration-300"
-              style={{
-                background: "rgba(139,26,26,0.5)",
-                border: "1px solid rgba(192,57,43,0.7)",
-                color: "white",
-                backdropFilter: "blur(16px)",
-              }}
-            >
-              Download Access
-            </motion.a>
-          </Link>
+            Download Access
+          </motion.a>
         )}
       </motion.div>
     </main>
