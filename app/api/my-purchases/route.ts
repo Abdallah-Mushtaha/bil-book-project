@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { supabase } from "@/lib/supabase";
 
 export async function GET() {
-  const { userId } = await auth(); 
+  const { userId } = await auth();
   if (!userId) {
     return NextResponse.json({ orders: [] });
   }
@@ -12,7 +12,7 @@ export async function GET() {
     .from("orders")
     .select("*")
     .eq("user_id", userId)
-    .eq("status", "COMPLETED")
+    .eq("status", "completed")
     .order("created_at", { ascending: false });
 
   if (error) {
