@@ -42,10 +42,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false }, { status: 400 });
     }
 
-    // تحديث قاعدة البيانات عند نجاح العملية
-    // يتم التحديث ليصبح status = completed
-    // بما أنك تستخدم createSignedUrl في ملف الـ download، 
-    // لا نحتاج لتخزين رابط ثابت هنا، يكفي تغيير الحالة.
     const { error } = await supabase
       .from("orders")
       .update({ 
