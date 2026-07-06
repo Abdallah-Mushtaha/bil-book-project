@@ -6,6 +6,7 @@ import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { FeaturesList } from "./FeatureList";
 import { BookImage } from "./BookDisplay";
 import Link from "next/link";
+import { CheckoutButton } from "../shared/CheckoutButton";
 
 export default function AboutBook() {
   const ref = useRef(null);
@@ -58,12 +59,9 @@ export default function AboutBook() {
           <FeaturesList />
 
           <div className="mt-12 flex items-center gap-4">
-            <Link
-              href="/checkout"
-              className="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-red-600 hover:text-white transition-all duration-400 cursor-pointer"
-            >
+            <CheckoutButton className="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-red-600 hover:text-white transition-all duration-400 cursor-pointer">
               Buy Now
-            </Link>
+            </CheckoutButton>
           </div>
         </motion.div>
       </div>

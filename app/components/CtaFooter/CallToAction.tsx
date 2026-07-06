@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { CheckoutButton } from "../shared/CheckoutButton";
 
 export const CallToAction = ({
   inView,
@@ -70,8 +71,7 @@ export const CallToAction = ({
         </p>
 
         <div className="flex flex-col items-center justify-center gap-4 px-4">
-          <Link
-            href="/checkout"
+          <CheckoutButton
             className="w-full max-w-[280px] py-4 text-xs tracking-[0.2em] uppercase font-bold rounded-full transition-all duration-300"
             style={{
               background: "var(--crimson)",
@@ -79,13 +79,14 @@ export const CallToAction = ({
               boxShadow: "0 10px 30px -10px rgba(139,26,26,0.5)",
             }}
           >
-            <motion.button
+            <motion.span
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              className="block"
             >
               Get Your Copy
-            </motion.button>
-          </Link>
+            </motion.span>
+          </CheckoutButton>
 
           <motion.button
             whileHover={{ backgroundColor: "rgba(255,255,255,0.1)" }}
